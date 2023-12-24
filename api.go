@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
-
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -38,6 +38,14 @@ func NewAPIServer(listenAddr string, store Storage) *APIServer{
 
 func (s *APIServer) Run () {
 	router := mux.NewRouter()
+
+	cors := handlers.CORS(
+		handlers.AllowedMethods([]string{"GET","POST","DELETE"}),
+		handlers.AllowedOrigins([]string{"*"}),
+		handlers.AllowedHeaders([]string{"Content-Type"}),
+	)
+
+	router.Use(cors)
 
 	router.HandleFunc("/member", s.HandleMember).Methods("GET","POST","DELETE")
 	router.HandleFunc("/member/id/{id}", s.HandleGetMemberByID).Methods("GET","POST","DELETE")

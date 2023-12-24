@@ -139,7 +139,8 @@ func (s *PostgresStore) GetMemberByID (id uuid.UUID) (*Member, error) {
 
 
 func (s *PostgresStore) GetMembersByTech(tech string) ([]*Member, error) {
-	query := "SELECT * FROM member WHERE tech = $1"
+	//query := "SELECT * FROM member WHERE tech = $1"
+	query := "SELECT * FROM member WHERE tech ILIKE '%' || $1 || '%'"
   rows, err := s.db.Query(query, tech)
 	if err != nil {
 		fmt.Println("Error executing query:", err)
