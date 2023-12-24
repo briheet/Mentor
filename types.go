@@ -7,20 +7,20 @@ import (
 
 type CreateMemberRequest struct {
 	FirstName   string      `json:"firstname"`
-	LastName    string			`json:"lastname"`
-	Tech        string			`json:"tech"`
-	About       string			`json:"about"`
-	Discord     string			`json:"discord"`
+	LastName    string		`json:"lastname"`
+	Tech        string		`json:"tech"`
+	About       string		`json:"about"`
+	Discord     string		`json:"discord"`
 	Linkedin    string      `json:"linkedin"`
 }
 
 type Member struct {
 	ID          uuid.UUID   `json:"id"`
 	FirstName   string      `json:"firstname"`
-	LastName    string			`json:"lastname"`
-	Tech        string			`json:"tech"`
-	About       string			`json:"about"`
-	Discord     string			`json:"discord"`
+	LastName    string		`json:"lastname"`
+	Tech        string		`json:"tech"`
+	About       string		`json:"about"`
+	Discord     string		`json:"discord"`
 	Linkedin    string      `json:"linkedin"`
 	CreatedAt   time.Time   `json:"createdAt"`
 }

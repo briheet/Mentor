@@ -51,9 +51,7 @@ func (s *APIServer) Run () {
 	router.HandleFunc("/member/id/{id}", s.HandleGetMemberByID).Methods("GET","POST","DELETE")
 	router.HandleFunc("/member/tech/{tech}", s.HandleGetMemberByTech).Methods("GET")
 	router.HandleFunc("/member/delete/{id}", s.HandleDeleteMember).Methods("DELETE")
-	//router.HandleFunc("/member/update/{id}", s.HandleUpdateMember).Methods("POST")
 
-	
 	log.Println("Json API server running on port",s.listenAddr)
 
 	err := http.ListenAndServe(s.listenAddr, router)
@@ -92,7 +90,6 @@ func (s *APIServer) HandleGetMembers(w http.ResponseWriter, r *http.Request) err
 	w.WriteHeader(http.StatusOK)
 
 	if err := json.NewEncoder(w).Encode(members); err != nil {
-		// Log the JSON encoding error for debugging purposes
 		fmt.Println("Error encoding JSON:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return err
@@ -100,8 +97,6 @@ func (s *APIServer) HandleGetMembers(w http.ResponseWriter, r *http.Request) err
 
 	return nil
 }
-
-
 
 
 
@@ -132,15 +127,9 @@ func (s *APIServer) HandleGetMemberByID(w http.ResponseWriter, r *http.Request) 
 
 
 
-
-
-
 func (s *APIServer) HandleGetMemberByTech(w http.ResponseWriter, r *http.Request) {
 	tech := mux.Vars(r)["tech"]
 	
-	fmt.Println("bhencho abhi aya nhi Hadler mein")
-	
-
 	results, err := s.store.GetMembersByTech(tech)
 	if err != nil {
 			
@@ -187,17 +176,6 @@ func (s *APIServer) HandleDeleteMember(w http.ResponseWriter, r *http.Request) {
 
 
 
-// func (s *APIServer) HandleUpdateMember (w http.ResponseWriter, r *http.Request) {
-
-// 	createMemberReq := new(CreateMemberRequest)
-
-
-
-// }
-
-
-
-
 func (s *APIServer) HandleCreateMember (w http.ResponseWriter, r *http.Request) {
 
 	createMemberReq := new(CreateMemberRequest)
@@ -206,8 +184,6 @@ func (s *APIServer) HandleCreateMember (w http.ResponseWriter, r *http.Request) 
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
-	//log.Printf("Decoded request: %+v\n", createMemberReq)
 
 	newMember := NewMember(
 		createMemberReq.FirstName,
@@ -222,8 +198,6 @@ func (s *APIServer) HandleCreateMember (w http.ResponseWriter, r *http.Request) 
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	//log.Printf("New member details: %+v\n", newMember)
 
 	w.Header().Set("Content-Type","application/json")
 	w.WriteHeader(http.StatusCreated)
